@@ -1,23 +1,49 @@
 pipeline {
     agent any
 
+    environment {
+        BRANCH = 'main'
+    }
+
     stages {
-
-        stage('Checkout') {
+        stage('STAGE1') {
+            environment {
+                APP = 'frontend'
+            }
             steps {
-                echo 'Checking out source code'
+                sh '''
+                    echo APP - $APP 
+                    echo BRANCH - $BRANCH
+                    sleep 5
+                '''
             }
         }
 
-        stage('Install Dependencies') {
+        stage('STAGE2') {
+          
             steps {
-                bat 'pip install -r requirements.txt'
+                sh '''
+                    echo APP - $APP 
+                    echo BRANCH - $BRANCH
+                    sleep 10
+                    ls -lrt
+                '''
+
+                echo "${env.BRANCH}"
             }
         }
 
-        stage('Run Tests') {
+        stage('STAGE3') {
             steps {
-                bat 'pytest'
+                echo "This is Stage3"
+                sh 'sleep 5'
+            }
+        }
+
+        stage('STAGE4') {
+            steps {
+                 sh 'echo THis is STAGE4'
+                 sh 'sleep 5'
             }
         }
     }
